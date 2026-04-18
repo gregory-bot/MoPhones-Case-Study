@@ -1,4 +1,4 @@
-<![CDATA[# 📱 MoPhones Case Study — Portfolio Health, CX & Data Quality
+# 📱 MoPhones Case Study — Portfolio Health, CX & Data Quality
 
 > **Data Analyst (Product) Case Study**  
 > An end-to-end analysis of MoPhones' credit portfolio, customer experience (NPS), and data quality — covering 20,000+ loans across five quarterly snapshots in 2025.
@@ -282,4 +282,3 @@ All tables join on **`loan_id`**. The snapshot fact table uses a composite PK (`
 ## 📝 License
 
 This repository contains a case study submission and is not intended for redistribution.
-]]>
