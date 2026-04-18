@@ -1,11 +1,11 @@
-# 📱 MoPhones Case Study — Portfolio Health, CX & Data Quality
+# MoPhones Case Study
 
-> **Data Analyst (Product) Case Study**  
-> An end-to-end analysis of MoPhones' credit portfolio, customer experience (NPS), and data quality — covering 20,000+ loans across five quarterly snapshots in 2025.
+> **Data Analyst Case Study**  
+> An analysis of MoPhones' credit portfolio, customer experience (NPS), and data quality — covering 20,000+ loans across five quarterly snapshots in 2025.
 
 ---
 
-## 📂 Repository Structure
+##File Structure
 
 ```
 MoPhones/
@@ -17,7 +17,7 @@ MoPhones/
 │   └── Credit Data - 30-12-2025.csv
 ├── Sales and Customer Data.xlsx        # 4 sheets: Gender, DOB, Income Level, Sales Details
 ├── NPS Data.xlsx                       # 4,129 Net Promoter Score survey responses
-├── MoPhones_Case_Study_Analysis.ipynb  # ⭐ Main analysis notebook
+├── MoPhones_Case_Study_Analysis.ipynb  #  Main analysis notebook
 ├── q1_portfolio_trends.png             # Chart — quarterly trend of 5 portfolio metrics
 ├── q1_age_segment.png                  # Chart — arrears rate by age band
 ├── q2_nps_credit.png                   # Chart — NPS by account status & DPD bucket
@@ -27,20 +27,19 @@ MoPhones/
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 | Tool | Version | Purpose |
 |------|---------|---------|
 | Python | 3.14 | Core language |
 | pandas | latest | Data wrangling & aggregation |
 | numpy | latest | Numeric operations |
-| matplotlib | latest | Charting (Agg backend) |
-| seaborn | latest | Statistical visualizations |
-| openpyxl | latest | Reading `.xlsx` files |
+| matplotlib | latest | Charting |
+| seaborn | latest | Statistical visualization |
 
 ---
 
-## ⚙️ Setup & Run
+## Setup & Run
 
 ```bash
 # 1. Create virtual environment
@@ -51,13 +50,13 @@ python -m venv .venv
 # 2. Install dependencies
 pip install pandas numpy matplotlib seaborn openpyxl
 
-# 3. Open the notebook
+# 3. Open notebook
 jupyter notebook MoPhones_Case_Study_Analysis.ipynb
 ```
 
 ---
 
-## 📋 Key Assumptions
+## Assumptions
 
 These are documented at the top of the notebook and drive many analytical decisions:
 
@@ -71,9 +70,9 @@ These are documented at the top of the notebook and drive many analytical decisi
 
 ---
 
-## 🔍 Analysis Walkthrough
+## Analysis
 
-### 1 — Data Loading & Preparation
+### 1 Data Loading
 
 **Credit portfolio** — Five quarterly CSVs are loaded, cleaned, and stacked:
 
@@ -115,7 +114,7 @@ credit_enriched["AGE_YEARS"] = (
 
 ---
 
-### 2 — Question 1: Portfolio Health (40%)
+### 2 Question 1: Portfolio Health
 
 Five metrics are tracked across all quarterly snapshots:
 
@@ -136,7 +135,7 @@ for snap in snapshots:
     collection_rate = s["TOTAL_PAID"].sum() / s["TOTAL_DUE_TODAY"].sum() * 100
 ```
 
-#### Quarterly Trends
+#### Quarterly Trend
 
 ![Portfolio Health Trends](q1_portfolio_trends.png)
 
@@ -146,14 +145,14 @@ The **18–25 age band** consistently shows a higher arrears rate than the portf
 
 ![Age Band Arrears](q1_age_segment.png)
 
-**Key Findings:**
+**Key Finding:**
 - Portfolio is **growing fast** (~9k → 21k accounts) — raw arrears counts will rise even if rates stay flat
 - **18–25 year-olds** are the standout risk segment; targeted actions (shorter loan terms, more frequent reminders) could reduce exposure
 - Collection Rate trend reveals whether cash recovery keeps pace with growth
 
 ---
 
-### 3 — Question 2: Credit Outcomes × Customer Experience (35%)
+### 3 Question 2: Credit Outcomes × Customer Experience
 
 NPS survey responses are joined to the Dec 2025 credit snapshot:
 
@@ -173,7 +172,7 @@ def nps_category(score):
     return "Detractor"
 ```
 
-#### NPS by Account Status & Days Past Due
+#### NPS by Account Status and Days Past Due
 
 ![NPS vs Credit Status](q2_nps_credit.png)
 
@@ -190,20 +189,20 @@ Customers who had their **phone locked despite paying on time** show a significa
 
 ---
 
-### 4 — Question 3: Data Quality Assessment (25%)
+### 4 Question 3: Data Quality Assessmen
 
 Six issues were identified during the analysis:
 
 | # | Issue | Severity |
 |---|-------|----------|
-| 1 | **Excel row-limit truncation** — all 4 demographic sheets contain exactly 1,048,575 rows | 🔴 Critical |
-| 2 | **Inconsistent join keys** — `"Loan Id "` (trailing space) in DOB sheet vs `"Loan Id"` elsewhere | 🟡 Medium |
-| 3 | **Column inconsistency** — Jun/Sep/Dec credit CSVs have 34 cols vs 33 in Jan/Mar | 🟡 Medium |
-| 4 | **Ambiguous field names** — `CUSTOMER_AGE` is actually days since sale, not biological age | 🟠 High |
-| 5 | **Undocumented status hierarchy** — mapping between `ACCOUNT_STATUS_L1` and `L2` is unclear | 🟡 Medium |
-| 6 | **NPS temporal ambiguity** — no instruction on which credit snapshot to pair survey responses with | 🟡 Medium |
+| 1 | **Excel row-limit truncation** — all 4 demographic sheets contain exactly 1,048,575 rows | Critical |
+| 2 | **Inconsistent join keys** — `"Loan Id "` (trailing space) in DOB sheet vs `"Loan Id"` elsewhere | Medium |
+| 3 | **Column inconsistency** — Jun/Sep/Dec credit CSVs have 34 cols vs 33 in Jan/Mar | Medium |
+| 4 | **Ambiguous field names** — `CUSTOMER_AGE` is actually days since sale, not biological age | High |
+| 5 | **Undocumented status hierarchy** — mapping between `ACCOUNT_STATUS_L1` and `L2` is unclear | Medium |
+| 6 | **NPS temporal ambiguity** — no instruction on which credit snapshot to pair survey responses with | Medium |
 
-**Proposed Improvements:**
+**Proposed Improvement:**
 
 | # | Improvement | Impact |
 |---|------------|--------|
@@ -213,7 +212,7 @@ Six issues were identified during the analysis:
 
 ---
 
-### 5 — Bonus: Entity-Relationship Diagram
+### 5 Entity-Relationship Diagram
 
 ```
 ┌──────────────────────────┐
@@ -267,7 +266,7 @@ All tables join on **`loan_id`**. The snapshot fact table uses a composite PK (`
 
 ---
 
-## 📊 Output Summary
+## Summary
 
 | Output | Description |
 |--------|-------------|
